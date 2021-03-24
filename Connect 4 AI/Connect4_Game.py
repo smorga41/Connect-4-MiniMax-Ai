@@ -130,7 +130,7 @@ class Grid:
 
                 #AI Decision with timer
                 start = time.time()
-                column = Connect4_Ai3.minimax(self.grid, depth,-math.inf, math.inf, True)[0]
+                column = Connect4_Ai.minimax(self.grid, depth,-math.inf, math.inf, True)[0]
                 end = time.time()
                 runTime = end - start
 
