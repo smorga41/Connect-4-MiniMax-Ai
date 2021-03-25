@@ -113,8 +113,9 @@ class Grid:
             #self.SwapTurn() #removed to change how turns are handled
             #self.Turn() #removed to change how turns are handled
 
-    def Gameplay(self, depth):
+    def Gameplay(self, approxRunTime):
         runTime = 0
+        depth = 6
 
         while self.gameOver == False:
             #player 1 turn (Human)
@@ -133,9 +134,8 @@ class Grid:
             if self.gameOver == False:
                 
                 print("Player 2's Turn")
+                print("Ai is thinking with a depth of "+str(depth))
                 self.num=2 
-
-                prevRunTime = runTime
 
                 #AI Decision with timer
                 start = time.time()
@@ -144,13 +144,17 @@ class Grid:
                 runTime = end - start
                 #output a few stats 
                 print("MinMax Algorithm took "+str(runTime)+"s to run at a depth of "+str(depth))
-                #print("Ratio of Ai wins/Player Wins "+str(aiWinNum)+"/"+str(playerWinNum))
-                #print("Ratio: "+str(aiWinNum/playerWinNum))
-                #tune depth to increase accuracy as runtime decreases
-                if runTime < prevRunTime:
+                #print("Ratio of Ai wins/Player Wins "+str(aiWinNum)+"/"+str(p1WinNum))
+                #print("Ratio: "+str(aiWinNum/p1WinNum))
+
+                #tune depth to in
+                # crease accuracy as runtime decreases
+                if runTime < approxRunTime - 2.5:
                     depth += 1
-                elif runTime > prevRunTime and runTime > 6:
+                    print("Depth increased to "+str(depth))
+                elif runTime > approxRunTime + 2.5 and runTime > 6:
                     depth -= 1
+                    print("Depth decreased to "+str(depth))
 
                 self.Turn(column)  
                 print("The AI has played column "+str(column+1))
@@ -180,4 +184,4 @@ class Grid:
   
 game = Grid()
 game.Display()
-game.Gameplay(6) #lower numbers are easier, higher numbers are harder
+game.Gameplay(10) #lower numbers are easier, higher numbers are harder

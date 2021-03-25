@@ -34,11 +34,11 @@ def minimax (grid, depth, alpha, beta, isMaximisingPlayer):
     if isTerminal(grid) or depth == 0: 
         if isTerminal(grid):
             if PieceWinCheck(grid, AI_PIECE):
-                print("Possible Ai win found")
                 return(None, WIN_SCORE - depth) #subtracting depth makes AI favour a quicker win over a long one
+            
             elif PieceWinCheck(grid, PLAYER_PIECE):
-                print("Possible Player win found")
                 return(None, LOSE_SCORE + depth)
+            
             else: #game over no more valid moves
                 return (None, 0)
         else: #depth is 0 so leaf node reached
