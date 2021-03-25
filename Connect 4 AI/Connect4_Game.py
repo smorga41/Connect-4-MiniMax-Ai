@@ -2,6 +2,15 @@ import Connect4_Ai
 import math
 import time
 
+# CONSTANTS
+EMPTY = 0
+PLAYER_PIECE = 1
+AI_PIECE = 2
+
+ROW_COUNT = 6
+COLUMN_COUNT = 7
+
+WINDOW_LENGTH = 4
 
 class Grid:
     def __init__(self):
@@ -59,16 +68,16 @@ class Grid:
                     self.CheckHorizontal(row, column, inrow)
 
 
-    def PieceWinCheck(self):
-        for i in range(7):
-            for u in range (6):
-                if self.grid[i][u] == self.num:
-                    self.CheckDiagonal(u, i, 1, -1)
-                    self.CheckDiagonal(u, i, 1, 1)
-                    self.CheckHorizontal(u, i, 1)
-                    self.CheckVertical(u, i, 1)
+    #def PieceWinCheck(self):
+    #    for i in range(7):
+     #       for u in range (6):
+      #          if self.grid[i][u] == self.num:
+       #             self.CheckDiagonal(u, i, 1, -1)
+        #            self.CheckDiagonal(u, i, 1, 1)
+         #           self.CheckHorizontal(u, i, 1)
+          #          self.CheckVertical(u, i, 1)
 
-
+    
     def SwapTurn(self):
         if self.num == 1:
             self.num = 2
@@ -87,7 +96,7 @@ class Grid:
     def Turn(self, column):
         self.Drop(column)
         self.Display()
-        self.PieceWinCheck()
+        self.gameOver = Connect4_Ai.PieceWinCheck(self.grid, self.num)
         if self.gameOver == True:
             readableWinner = ""
             if self.num == 1:

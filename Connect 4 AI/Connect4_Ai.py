@@ -197,3 +197,4 @@ def PieceWinCheck(board, piece): # has someone won
 		for r in range(ROW_COUNT -3):
 			if board[c][r] == piece and board[c+1][r+1] == piece and board[c+2][r+2] == piece and board[c+3][r+3] == piece:
 				return True
+	return False
