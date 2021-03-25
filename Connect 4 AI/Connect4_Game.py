@@ -133,16 +133,18 @@ class Grid:
                 column = Connect4_Ai.minimax(self.grid, depth,-math.inf, math.inf, True)[0]
                 end = time.time()
                 runTime = end - start
-
+                #output a few stats 
                 print("MinMax Algorithm took "+str(runTime)+"s to run at a depth of "+str(depth))
-                print("The AI has played column "+str(column+1))
-
+                #print("Ratio of Ai wins/Player Wins "+str(aiWinNum)+"/"+str(playerWinNum))
+                #print("Ratio: "+str(aiWinNum/playerWinNum))
+                #tune depth to increase accuracy as runtime decreases
                 if runTime < prevRunTime:
                     depth += 1
                 elif runTime > prevRunTime and runTime > 6:
                     depth -= 1
 
                 self.Turn(column)  
+                print("The AI has played column "+str(column+1))
 
     def ValidatePlayerTurn(self,column):
         columnIndex = column - 1

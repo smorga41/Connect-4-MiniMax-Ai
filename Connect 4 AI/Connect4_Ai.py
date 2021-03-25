@@ -19,7 +19,11 @@ LOSE_SCORE = -100000000
 FOURINROW = 100
 THREEINROW = 10
 TWOINROW = 3
-MIDDLE_COLUMN =1
+MIDDLE_COLUMN =2
+
+OPP_FOURINROW = -100000000000
+OPP_THREEINROW = -12
+OPP_TWOINROW = -4
 
 ##################### min max algorithm ################################
 
@@ -30,11 +34,11 @@ def minimax (grid, depth, alpha, beta, isMaximisingPlayer):
     if isTerminal(grid) or depth == 0: 
         if isTerminal(grid):
             if PieceWinCheck(grid, AI_PIECE):
-                print("Possible AI win found")
+                print("Possible Ai win found")
                 return(None, WIN_SCORE - depth) #subtracting depth makes AI favour a quicker win over a long one
             elif PieceWinCheck(grid, PLAYER_PIECE):
                 print("Possible Player win found")
-                return(None, -LOSE_SCORE + depth)
+                return(None, LOSE_SCORE + depth)
             else: #game over no more valid moves
                 return (None, 0)
         else: #depth is 0 so leaf node reached
