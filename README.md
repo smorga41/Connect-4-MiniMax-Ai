@@ -1,2 +1,2 @@
 # Connect-4-MiniMax-Ai
-An Ai using the minimax algorithm to play a human at connect 4. 
+An Ai using a minimax algorithm with alpha-beta pruning to beat humans at connect 4. 
