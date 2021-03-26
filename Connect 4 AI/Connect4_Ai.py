@@ -10,6 +10,8 @@ AI_PIECE = 2
 ROW_COUNT = 6
 COLUMN_COUNT = 7
 
+GET_VALID_MOVES = [3,4,2,5,1,6,0]
+
 WINDOW_LENGTH = 4
 
 #scoreing constants
@@ -20,6 +22,8 @@ FOURINROW = 100
 THREEINROW = 10
 TWOINROW = 3
 MIDDLE_COLUMN =2
+
+AGING_PENALTY = 3
 
 OPP_FOURINROW = -100000000000
 OPP_THREEINROW = -12
@@ -34,10 +38,10 @@ def minimax (grid, depth, alpha, beta, isMaximisingPlayer):
     if isTerminal(grid) or depth == 0: 
         if isTerminal(grid):
             if PieceWinCheck(grid, AI_PIECE):
-                return(None, WIN_SCORE - depth) #subtracting depth makes AI favour a quicker win over a long one
+                return(None, WIN_SCORE - depth * AGING_PENALTY) #subtracting depth makes AI favour a quicker win over a long one
             
             elif PieceWinCheck(grid, PLAYER_PIECE):
-                return(None, LOSE_SCORE + depth)
+                return(None, LOSE_SCORE + depth * AGING_PENALTY)
             
             else: #game over no more valid moves
                 return (None, 0)
@@ -97,7 +101,7 @@ def Drop(grid, column, num):
 
 def getValidMoves(grid):
     validLocaions=[]
-    for column in range(COLUMN_COUNT):
+    for column in GET_VALID_MOVES: #ordered so that rows closest to middle are at the start
         if IsValid(grid, column) == True:
             validLocaions.append(column)
     return validLocaions
@@ -198,3 +202,24 @@ def PieceWinCheck(board, piece): # has someone won
 			if board[c][r] == piece and board[c+1][r+1] == piece and board[c+2][r+2] == piece and board[c+3][r+3] == piece:
 				return True
 	return False
+
+#################### Zobrist Hashing #######################
+
+# generates a zorbist table filled with random numbers which remin constant throuhgt a game
+numBoardCells, numPieces = ROW_COUNT * COLUMN_COUNT, 2 
+zobristMatrix = [[random.randint(1,2**64 - 1) for x in range(numPieces)] for y in range(numBoardCells)]
+
+
+def FindHash (grid): # returns zobrist hash key for current board config
+	zobHashVal = 0 
+	for row in range(ROW_COUNT-1):
+		for col in range(COLUMN_COUNT-1):
+			if grid[col][row] != 0:
+				piece = grid[col][row]
+
+				gridPosition = (row * COLUMN_COUNT) + col
+
+				zobHashVal ^= zobristMatrix[gridPosition][piece] #XOR Operation on all piece position and types to create unique hash
+				print("Zobrist hash value is: "+zobHashVal)
+
+	return hash

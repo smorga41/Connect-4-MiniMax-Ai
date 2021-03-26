@@ -115,7 +115,8 @@ class Grid:
 
     def Gameplay(self, approxRunTime):
         runTime = 0
-        depth = 6
+        depth = 7
+        roundsPlayed = 0
 
         while self.gameOver == False:
             #player 1 turn (Human)
@@ -149,15 +150,16 @@ class Grid:
 
                 #tune depth to in
                 # crease accuracy as runtime decreases
-                if runTime < approxRunTime - 2.5:
+                if runTime < approxRunTime - 2.5 and roundsPlayed > 4:
                     depth += 1
                     print("Depth increased to "+str(depth))
-                elif runTime > approxRunTime + 2.5 and runTime > 6:
+                elif runTime > approxRunTime + 2.5 and runTime > 6 and roundsPlayed > 4:
                     depth -= 1
                     print("Depth decreased to "+str(depth))
 
                 self.Turn(column)  
                 print("The AI has played column "+str(column+1))
+                roundsPlayed += 1
 
     def ValidatePlayerTurn(self,column):
         columnIndex = column - 1
