@@ -159,6 +159,7 @@ def evaluate_window(window, piece):
 
 	if window.count(piece) == 4:
 		score += FOURINROW
+		return score
 	elif window.count(piece) == 3 and window.count(EMPTY) == 1:
 		score += THREEINROW
 	elif window.count(piece) == 2 and window.count(EMPTY) == 2:
@@ -166,6 +167,7 @@ def evaluate_window(window, piece):
 
 	if window.count(opp_piece) == 4:
 		score -= FOURINROW
+		return score
 	elif window.count(opp_piece) == 3 and window.count(EMPTY) == 1:
 		score -= THREEINROW
 	elif window.count(opp_piece) == 2 and window.count(EMPTY) == 2:
@@ -223,3 +225,4 @@ def FindHash (grid): # returns zobrist hash key for current board config
 				print("Zobrist hash value is: "+zobHashVal)
 
 	return hash
+

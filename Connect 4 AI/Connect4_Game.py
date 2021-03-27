@@ -115,14 +115,14 @@ class Grid:
 
     def Gameplay(self, approxRunTime):
         runTime = 0
-        depth = 7
+        depth = 6
         roundsPlayed = 0
 
         while self.gameOver == False:
             #player 1 turn (Human)
             print("Player 1's Turn")
             self.num = 1
-
+            
             #validate human inputs
             column = int(input("select a column 1-7: "))
             while self.ValidatePlayerTurn(column) == False:
