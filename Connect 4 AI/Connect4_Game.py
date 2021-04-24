@@ -1,6 +1,7 @@
 import Connect4_Ai
 import math
 import time
+import random 
 
 # CONSTANTS
 EMPTY = 0
@@ -123,17 +124,30 @@ class Grid:
             print("Player 1's Turn")
             self.num = 1
             
+            #Ai suggestion for human
+            aiColumnIndex = Connect4_Ai.minimax(self.grid, depth - 1, -math.inf, math.inf, True)[0]
+
             #validate human inputs
             column = int(input("select a column 1-7: "))
             while self.ValidatePlayerTurn(column) == False:
                 column = int(input("select a column 1-7: "))
             columnIndex = column - 1
 
+            #bullying the human
+            print("") #line break
+            if aiColumnIndex == columnIndex:
+                print("CONGRATULATIONS you played the best move for this scenario")
+            else:
+                print("That was not the best move")
+                print("You should have played column "+str(aiColumnIndex+1))
+            print("") #line break
+
             self.Turn(columnIndex)
 
             #player 2's turn (AI)
             if self.gameOver == False:
                 
+                print("")
                 print("Player 2's Turn")
                 print("Ai is thinking with a depth of "+str(depth))
                 self.num=2 
@@ -147,7 +161,7 @@ class Grid:
                 print("MinMax Algorithm took "+str(runTime)+"s to run at a depth of "+str(depth))
                 #print("Ratio of Ai wins/Player Wins "+str(aiWinNum)+"/"+str(p1WinNum))
                 #print("Ratio: "+str(aiWinNum/p1WinNum))
-
+                print("")
                 #tune depth to in
                 # crease accuracy as runtime decreases
                 if runTime < approxRunTime - 2.5 and roundsPlayed > 4:
@@ -158,7 +172,9 @@ class Grid:
                     print("Depth decreased to "+str(depth))
 
                 self.Turn(column)  
+                print("")
                 print("The AI has played column "+str(column+1))
+                print("")
                 roundsPlayed += 1
 
     def ValidatePlayerTurn(self,column):
@@ -182,7 +198,6 @@ class Grid:
         else:
             print("The selected row is full")
             return False
-
   
 game = Grid()
 game.Display()
