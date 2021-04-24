@@ -29,6 +29,8 @@ OPP_FOURINROW = -100000000000000000000000
 OPP_THREEINROW = -12
 OPP_TWOINROW = -4
 
+#Win/loss counting variables
+
 ##################### min max algorithm ################################
 
 def minimax (grid, depth, alpha, beta, isMaximisingPlayer):
@@ -38,10 +40,12 @@ def minimax (grid, depth, alpha, beta, isMaximisingPlayer):
     if isTerminal(grid) or depth == 0: 
         if isTerminal(grid):
             if PieceWinCheck(grid, AI_PIECE):
-                return(None, WIN_SCORE - depth * AGING_PENALTY) #subtracting depth makes AI favour a quicker win over a long one
+                score = WIN_SCORE+depth*AGING_PENALTY #score is greater for wins in fewer moves
+                return(None, score) 
             
             elif PieceWinCheck(grid, PLAYER_PIECE):
-                return(None, LOSE_SCORE + depth * AGING_PENALTY)
+                score = LOSE_SCORE-depth*AGING_PENALTY #score is less when player can win in few moves
+                return(None, score)
             
             else: #game over no more valid moves
                 return (None, 0)
